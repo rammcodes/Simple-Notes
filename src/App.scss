@@ -1,0 +1,257 @@
+html {
+  font-size: 62.5%;
+}
+
+.app {
+  background: #eee;
+  min-height: 100vh;
+}
+
+@mixin flex-hBvC {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-vC {
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  padding: 2rem 4rem;
+  font-size: 1.6rem;
+  color: #fff;
+  background: purple;
+  border: none;
+  border-radius: 5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.btn-plane {
+  color: purple;
+  background: #fff;
+  border: 1px solid purple;
+}
+
+.btn-long {
+  width: 100%;
+}
+
+.noShadow {
+  box-shadow: none;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30rem;
+  background: purple;
+  height: 100%;
+  padding: 2rem;
+  .app-title {
+    padding: 2rem;
+    border-radius: 5px;
+    background: rgba(#fff, 0.1);
+    font-size: 2rem;
+    color: #eee;
+    @include flex-vC;
+    span {
+      margin-right: 1.5rem;
+    }
+    .icon {
+      color: #fff;
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+}
+
+.main-app {
+  margin-left: 30rem;
+  padding: 2rem;
+  .search {
+    padding: 0;
+    background: #fff;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: calc(100% - 34rem);
+    left: 32rem;
+
+    .icon-cont {
+      padding: 0 1.5rem;
+      color: rgb(170, 170, 170);
+    }
+    input {
+      padding: 2rem 2rem 2rem 0;
+      font-size: 2rem;
+      border: none;
+      width: 100%;
+      color: grey;
+      font-weight: bold;
+    }
+  }
+  .actions {
+    margin: 15rem 0 3rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .notes {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 2rem;
+
+    .note {
+      padding: 3rem 2rem;
+      background: #fff;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      .upper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 3rem;
+        .note-title {
+          font-size: 2rem;
+          color: #666;
+          font-weight: 800;
+          width: calc(100% - 6rem);
+        }
+        .note-actions {
+          display: flex;
+          align-items: center;
+          .delete-cont,
+          .edit-cont {
+            width: 2rem;
+            cursor: pointer;
+            margin-left: 1rem;
+            .icon {
+              width: 2rem;
+              height: 2rem;
+              color: #888;
+            }
+          }
+          .edit-cont {
+            margin-left: 0;
+          }
+        }
+      }
+      .lower {
+        .note-desc {
+          font-size: 1.6rem;
+          line-height: 1.6;
+          color: rgb(150, 150, 150);
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+.form-cont {
+  //background: rgba(#fff, .);
+  backdrop-filter: blur(5px);
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  height: 100%;
+  .form {
+    background: #fff;
+    padding: 5rem;
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    max-width: 700px;
+    border-radius: 5px;
+    .form-input {
+      background: rgba(purple, 0.1);
+      width: 100%;
+      display: block;
+      border: none;
+      margin-bottom: 3rem;
+      border-radius: 5px;
+      padding: 2rem;
+      font-weight: bold;
+      font-size: 1.6rem;
+      color: purple;
+    }
+    .form-input::-webkit-input-placeholder {
+      /* WebKit, Blink, Edge */
+      color: orange;
+    }
+    .form-input:-moz-placeholder {
+      /* Mozilla Firefox 4 to 18 */
+      color: orange;
+      opacity: 1;
+    }
+    .form-input::-moz-placeholder {
+      /* Mozilla Firefox 19+ */
+      color: orange;
+      opacity: 1;
+    }
+    .form-input:-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      color: orange;
+    }
+    .form-input::-ms-input-placeholder {
+      /* Microsoft Edge */
+      color: orange;
+    }
+
+    .form-input::placeholder {
+      /* Most modern browsers support this now. */
+      color: rgba(purple, 0.5);
+      font-weight: bold;
+    }
+  }
+}
+
+input:focus,
+button:focus {
+  outline: none;
+}
+
+::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  color: rgb(150, 150, 150);
+}
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: rgb(150, 150, 150);
+  opacity: 1;
+}
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: rgb(150, 150, 150);
+  opacity: 1;
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: rgb(150, 150, 150);
+}
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: rgb(150, 150, 150);
+}
+
+::placeholder {
+  /* Most modern browsers support this now. */
+  color: rgb(200, 200, 200);
+}
+
+.mb2 {
+  margin-bottom: 2rem;
+}
