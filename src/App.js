@@ -1,6 +1,8 @@
 import './App.scss'
 import React, { Component } from 'react'
 import { Book, Search, Trash2, Edit } from 'react-feather'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 class App extends Component {
   state = {
@@ -10,8 +12,32 @@ class App extends Component {
       desc: '',
     },
     currEdit: null,
-    notes: [],
+    notes: [
+      {
+        title: 'Eat Breakfast',
+        desc:
+          'Have some healthy breakfast and also include enough micro nutrients',
+      },
+      {
+        title: 'Play Soccer',
+        desc: 'Have some healthy breakfast and enough micro nutrients',
+      },
+      {
+        title: 'Water Plants',
+        desc:
+          'Water Plants and healthy breakfast and also include enough micro nutrients',
+      },
+      {
+        title: 'Clean Diet',
+        desc: 'Some healthy breakfast and also include enough micro nutrients',
+      },
+      {
+        title: 'Exercise Yoga',
+        desc: 'Have some healthy breakfast and  include enough micro nutrients',
+      },
+    ],
     searchQuery: '',
+    sort: 'new',
   }
 
   setNotesFormVisibility = (val) => {
@@ -40,6 +66,31 @@ class App extends Component {
 
   createNewNote = () => {
     const { newNoteData, notes, currEdit } = this.state
+
+    if (!newNoteData.title.length) {
+      return toast.error('Title is Must', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
+    }
+
+    if (!newNoteData.desc.length) {
+      return toast.error('Description is Must', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
+    }
+
     if (currEdit !== null) {
       const updatedNotes = JSON.parse(JSON.stringify(notes))
       updatedNotes[currEdit].title = newNoteData.title
@@ -54,15 +105,29 @@ class App extends Component {
         currEdit: null,
       })
     } else {
-      notes.push(newNoteData)
-      this.setState({
-        newNoteData: {
-          title: '',
-          desc: '',
+      const newNotes = [newNoteData].concat(notes)
+
+      this.setState(
+        {
+          newNoteData: {
+            title: '',
+            desc: '',
+          },
+          notes: newNotes,
+          showNotesForm: false,
         },
-        notes,
-        showNotesForm: false,
-      })
+        () => {
+          toast.success('🦄 Note Added', {
+            position: 'bottom-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
+        }
+      )
     }
   }
 
@@ -94,17 +159,19 @@ class App extends Component {
   }
 
   getFilteredNotes = () => {
-    let { searchQuery, notes } = this.state
+    let { searchQuery, notes, sort } = this.state
     notes = notes.filter((note, idx) =>
       note.title.toLowerCase().includes(searchQuery.toLowerCase())
     )
-    return notes
+
+    return sort === 'new' ? notes : notes.reverse()
   }
 
   render() {
-    const { showNotesForm, newNoteData, notes, searchQuery } = this.state
+    const { showNotesForm, newNoteData, searchQuery } = this.state
     return (
       <div className="app">
+        <ToastContainer position="bottom-right" />
         <div className="sidebar">
           <h1 className="app-title">
             <span>Notes</span>
@@ -128,15 +195,26 @@ class App extends Component {
             />
           </div>
           <div className="actions">
-            <div className="filters"></div>
             <div className="main-actions">
               <button
-                className="btn btn-filled"
+                className="btn"
                 onClick={() => this.setNotesFormVisibility(true)}
               >
                 Add Note
               </button>
             </div>
+            <select
+              onChange={(e) => {
+                this.setState({
+                  sort: e.target.value,
+                })
+              }}
+              name="sort"
+              id="cars"
+            >
+              <option value="new">Newest</option>
+              <option value="old">Oldest</option>
+            </select>
           </div>
           <div className="notes">
             {this.getFilteredNotes().map((item, idx) => {

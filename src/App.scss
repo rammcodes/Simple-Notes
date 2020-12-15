@@ -29,6 +29,7 @@ html {
   letter-spacing: 1px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  border: 1px solid purple;
 }
 
 .btn-plane {
@@ -102,8 +103,18 @@ html {
   .actions {
     margin: 15rem 0 3rem 0;
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
+
+    select {
+      padding: 0rem;
+      background: #fff;
+      border: none;
+      padding: 0 1rem;
+      font-weight: bold;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      cursor: pointer;
+    }
   }
   .notes {
     display: grid;
@@ -187,6 +198,7 @@ html {
       font-weight: bold;
       font-size: 1.6rem;
       color: purple;
+      border: 1px solid rgba(purple, 0.1);
     }
     .form-input::-webkit-input-placeholder {
       /* WebKit, Blink, Edge */
@@ -220,7 +232,8 @@ html {
 }
 
 input:focus,
-button:focus {
+button:focus,
+select:focus {
   outline: none;
 }
 
@@ -254,4 +267,8 @@ button:focus {
 
 .mb2 {
   margin-bottom: 2rem;
+}
+
+.Toastify__toast--success {
+  background: purple !important;
 }
