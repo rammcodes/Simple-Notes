@@ -69,7 +69,7 @@ class App extends Component {
 
     if (!newNoteData.title.length) {
       return toast.error('Title is Must', {
-        position: 'bottom-right',
+        position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
