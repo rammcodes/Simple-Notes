@@ -70,6 +70,26 @@ html {
       height: 2rem;
     }
   }
+  .bottom {
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    .product-info {
+      color: #fff;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: rgba(#fff, 0.1);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      a {
+        color: #fff;
+        margin-left: 0.4rem;
+        font-weight: bold;
+      }
+    }
+  }
 }
 
 .main-app {
@@ -162,6 +182,18 @@ html {
           line-height: 1.6;
           color: rgb(150, 150, 150);
           font-weight: 500;
+          margin-bottom: 3rem;
+        }
+        .time-info {
+          text-align: right;
+          .time {
+            background: rgb(190, 190, 190);
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #fff;
+            padding: 0.5rem 2rem;
+            border-radius: 50px;
+          }
         }
       }
     }
@@ -169,7 +201,6 @@ html {
 }
 
 .form-cont {
-  //background: rgba(#fff, .);
   backdrop-filter: blur(5px);
   position: fixed;
   width: 100%;
@@ -271,4 +302,12 @@ select:focus {
 
 .Toastify__toast--success {
   background: purple !important;
+}
+
+@media (max-width: 1600px) {
+  .main-app {
+    .notes {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
 }

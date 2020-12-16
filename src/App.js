@@ -1,6 +1,6 @@
 import './App.scss'
 import React, { Component } from 'react'
-import { Book, Search, Trash2, Edit } from 'react-feather'
+import { Book, Search, Trash2, Edit, Filter } from 'react-feather'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -17,27 +17,33 @@ class App extends Component {
         title: 'Eat Breakfast',
         desc:
           'Have some healthy breakfast and also include enough micro nutrients',
+        date: '16 / 10 / 2020',
       },
       {
         title: 'Play Soccer',
         desc: 'Have some healthy breakfast and enough micro nutrients',
+        date: '16 / 10 / 2020',
       },
       {
         title: 'Water Plants',
         desc:
           'Water Plants and healthy breakfast and also include enough micro nutrients',
+        date: '16 / 10 / 2020',
       },
       {
         title: 'Clean Diet',
         desc: 'Some healthy breakfast and also include enough micro nutrients',
+        date: '16 / 10 / 2020',
       },
       {
         title: 'Exercise Yoga',
         desc: 'Have some healthy breakfast and  include enough micro nutrients',
+        date: '16 / 10 / 2020',
       },
     ],
     searchQuery: '',
     sort: 'new',
+    filter: 'all',
   }
 
   setNotesFormVisibility = (val) => {
@@ -69,7 +75,7 @@ class App extends Component {
 
     if (!newNoteData.title.length) {
       return toast.error('Title is Must', {
-        position: 'top-right',
+        position: 'bottom-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -95,18 +101,31 @@ class App extends Component {
       const updatedNotes = JSON.parse(JSON.stringify(notes))
       updatedNotes[currEdit].title = newNoteData.title
       updatedNotes[currEdit].desc = newNoteData.desc
-      this.setState({
-        newNoteData: {
-          title: '',
-          desc: '',
+      this.setState(
+        {
+          newNoteData: {
+            title: '',
+            desc: '',
+          },
+          notes: updatedNotes,
+          showNotesForm: false,
+          currEdit: null,
         },
-        notes: updatedNotes,
-        showNotesForm: false,
-        currEdit: null,
-      })
+        () => {
+          toast.success('🦄 Note Updated', {
+            position: 'bottom-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
+        }
+      )
     } else {
+      newNoteData.date = `${new Date().getDate()} / ${new Date().getMonth()} / ${new Date().getFullYear()}`
       const newNotes = [newNoteData].concat(notes)
-
       this.setState(
         {
           newNoteData: {
@@ -178,7 +197,20 @@ class App extends Component {
             <Book className="icon" />
           </h1>
           <div className="app-info"></div>
+          <div className="bottom">
+            <p className="product-info">
+              <span>Made By</span>
+              <a
+                href="https://rammaheshwari.com"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Ram
+              </a>
+            </p>
+          </div>
         </div>
+
         <div className="main-app">
           <div className="search">
             <span className="icon-cont">
@@ -193,6 +225,9 @@ class App extends Component {
               }}
               placeholder="Search Notes..."
             />
+              <span className="icon-cont">
+              <Filter className="icon" />
+            </span>
           </div>
           <div className="actions">
             <div className="main-actions">
@@ -239,6 +274,9 @@ class App extends Component {
                   </div>
                   <div className="lower">
                     <p className="note-desc">{item.desc}</p>
+                    <div className="time-info">
+                      <span className="time">{item.date}</span>
+                    </div>
                   </div>
                 </div>
               )
