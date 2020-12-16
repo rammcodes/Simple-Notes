@@ -1,6 +1,9 @@
 import './App.scss'
 import React, { Component } from 'react'
-import { Book, Search, Trash2, Edit, Filter } from 'react-feather'
+import Sidebar from './components/sidebar'
+import MainSearch from './components/MainSearch'
+import Notes from './components/Notes'
+import NotesForm from './components/NotesForm'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -15,35 +18,34 @@ class App extends Component {
     notes: [
       {
         title: 'Eat Breakfast',
-        desc:
-          'Have some healthy breakfast and also include enough micro nutrients',
-        date: '16 / 10 / 2020',
+        desc: 'Have some healthy breakfast in the morning to boost your day',
+        date: '10 / 10 / 2020',
       },
       {
-        title: 'Play Soccer',
-        desc: 'Have some healthy breakfast and enough micro nutrients',
-        date: '16 / 10 / 2020',
+        title: 'Soccer Event',
+        desc: 'Attend the interschool soccer event in the middle of city',
+        date: '9 / 10 / 2020',
       },
       {
         title: 'Water Plants',
+        desc: 'Water plants twice a day and use cold water and filtered water',
+        date: '8 / 10 / 2020',
+      },
+      {
+        title: 'Beach Trip',
         desc:
-          'Water Plants and healthy breakfast and also include enough micro nutrients',
-        date: '16 / 10 / 2020',
+          'Visit one nearby beach and enjoy the view while having some fresh drinks',
+        date: '7 / 10 / 2020',
       },
       {
-        title: 'Clean Diet',
-        desc: 'Some healthy breakfast and also include enough micro nutrients',
-        date: '16 / 10 / 2020',
-      },
-      {
-        title: 'Exercise Yoga',
-        desc: 'Have some healthy breakfast and  include enough micro nutrients',
-        date: '16 / 10 / 2020',
+        title: 'Practice Yoga',
+        desc:
+          'Practice Yoga to stay away from diseases and to protect your health',
+        date: '6 / 10 / 2020',
       },
     ],
     searchQuery: '',
     sort: 'new',
-    filter: 'all',
   }
 
   setNotesFormVisibility = (val) => {
@@ -186,49 +188,24 @@ class App extends Component {
     return sort === 'new' ? notes : notes.reverse()
   }
 
+  onSearchInput = (e) => {
+    console.log(e.target.value)
+    this.setState({
+      searchQuery: e.target.value,
+    })
+  }
+
   render() {
     const { showNotesForm, newNoteData, searchQuery } = this.state
     return (
       <div className="app">
         <ToastContainer position="bottom-right" />
-        <div className="sidebar">
-          <h1 className="app-title">
-            <span>Notes</span>
-            <Book className="icon" />
-          </h1>
-          <div className="app-info"></div>
-          <div className="bottom">
-            <p className="product-info">
-              <span>Made By</span>
-              <a
-                href="https://rammaheshwari.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Ram
-              </a>
-            </p>
-          </div>
-        </div>
-
+        <Sidebar />
         <div className="main-app">
-          <div className="search">
-            <span className="icon-cont">
-              <Search className="icon" />
-            </span>
-            <input
-              value={searchQuery}
-              onChange={(e) => {
-                this.setState({
-                  searchQuery: e.target.value,
-                })
-              }}
-              placeholder="Search Notes..."
-            />
-              <span className="icon-cont">
-              <Filter className="icon" />
-            </span>
-          </div>
+          <MainSearch
+            searchQuery={searchQuery}
+            onSearchInput={this.onSearchInput}
+          />
           <div className="actions">
             <div className="main-actions">
               <button
@@ -251,70 +228,19 @@ class App extends Component {
               <option value="old">Oldest</option>
             </select>
           </div>
-          <div className="notes">
-            {this.getFilteredNotes().map((item, idx) => {
-              return (
-                <div className="note" key={idx}>
-                  <div className="upper">
-                    <h3 className="note-title">{item.title}</h3>
-                    <div className="note-actions">
-                      <span className="edit-cont">
-                        <Edit
-                          className="icon"
-                          onClick={() => this.onEditClick(idx)}
-                        ></Edit>
-                      </span>
-                      <span className="delete-cont">
-                        <Trash2
-                          className="icon"
-                          onClick={() => this.deleteNote(idx)}
-                        ></Trash2>
-                      </span>
-                    </div>
-                  </div>
-                  <div className="lower">
-                    <p className="note-desc">{item.desc}</p>
-                    <div className="time-info">
-                      <span className="time">{item.date}</span>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
+          <Notes
+            getFilteredNotes={this.getFilteredNotes}
+            onEditClick={this.onEditClick}
+            deleteNote={this.deleteNote}
+          />
         </div>
         {showNotesForm ? (
-          <div className="form-cont">
-            <div className="form">
-              <input
-                className="form-input"
-                name="title"
-                placeholder="Title"
-                value={newNoteData.title}
-                onChange={(e) => this.onNotesFormInputChange(e)}
-                maxLength="20"
-              />
-              <input
-                className="form-input"
-                name="desc"
-                placeholder="Description"
-                value={newNoteData.desc}
-                onChange={(e) => this.onNotesFormInputChange(e)}
-              />
-              <button
-                className="btn btn-long mb2 noShadow"
-                onClick={this.createNewNote}
-              >
-                Submit
-              </button>
-              <button
-                onClick={() => this.setNotesFormVisibility(false)}
-                className="btn btn-long btn-plane noShadow"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
+          <NotesForm
+            newNoteData={newNoteData}
+            onNotesFormInputChange={this.onNotesFormInputChange}
+            createNewNote={this.createNewNote}
+            setNotesFormVisibility={this.setNotesFormVisibility}
+          />
         ) : null}
       </div>
     )
