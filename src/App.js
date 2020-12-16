@@ -73,7 +73,7 @@ class App extends Component {
   }
 
   createNewNote = () => {
-    const { newNoteData, notes, currEdit } = this.state
+    const { newNoteData, notes, currEdit, sort } = this.state
 
     if (!newNoteData.title.length) {
       return toast.error('Title is Must', {
@@ -100,16 +100,20 @@ class App extends Component {
     }
 
     if (currEdit !== null) {
-      const updatedNotes = JSON.parse(JSON.stringify(notes))
+      let updatedNotes = JSON.parse(JSON.stringify(notes))
+      if (sort === 'old') {
+        updatedNotes = updatedNotes.reverse()
+      }
       updatedNotes[currEdit].title = newNoteData.title
       updatedNotes[currEdit].desc = newNoteData.desc
+
       this.setState(
         {
           newNoteData: {
             title: '',
             desc: '',
           },
-          notes: updatedNotes,
+          notes: sort === 'old' ? updatedNotes.reverse() : updatedNotes,
           showNotesForm: false,
           currEdit: null,
         },
@@ -153,7 +157,11 @@ class App extends Component {
   }
 
   onEditClick = (idx) => {
+    const { sort } = this.state
     let notes = JSON.parse(JSON.stringify(this.state.notes))
+    if (sort === 'old') {
+      notes = notes.reverse()
+    }
     let editNote = notes[idx]
     this.setState(
       {
@@ -172,10 +180,14 @@ class App extends Component {
   }
 
   deleteNote = (idx) => {
+    const { sort } = this.state
     let notes = JSON.parse(JSON.stringify(this.state.notes))
+    if (sort === 'old') {
+      notes = notes.reverse()
+    }
     notes = notes.filter((item, index) => idx !== index)
     this.setState({
-      notes,
+      notes: sort === 'old' ? notes.reverse() : notes,
     })
   }
 
@@ -189,7 +201,6 @@ class App extends Component {
   }
 
   onSearchInput = (e) => {
-    console.log(e.target.value)
     this.setState({
       searchQuery: e.target.value,
     })
