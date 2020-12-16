@@ -19,29 +19,29 @@ class App extends Component {
       {
         title: 'Eat Breakfast',
         desc: 'Have some healthy breakfast in the morning to boost your day',
-        date: '10 / 10 / 2020',
+        date: '10 / 11 / 2020',
       },
       {
         title: 'Soccer Event',
         desc: 'Attend the interschool soccer event in the middle of city',
-        date: '9 / 10 / 2020',
+        date: '9 / 11 / 2020',
       },
       {
         title: 'Water Plants',
         desc: 'Water plants twice a day and use cold water and filtered water',
-        date: '8 / 10 / 2020',
+        date: '8 / 11 / 2020',
       },
       {
         title: 'Beach Trip',
         desc:
           'Visit one nearby beach and enjoy the view while having some fresh drinks',
-        date: '7 / 10 / 2020',
+        date: '7 / 11 / 2020',
       },
       {
         title: 'Practice Yoga',
         desc:
           'Practice Yoga to stay away from diseases and to protect your health',
-        date: '6 / 10 / 2020',
+        date: '6 / 11 / 2020',
       },
     ],
     searchQuery: '',
